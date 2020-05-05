@@ -29,6 +29,7 @@ contEat = 0
 contAnt = 0
 cubosizex = 20
 cubosizey = 20
+
 rx = random.randrange(350)
 ry = random.randrange(350)
 eat = False
@@ -40,18 +41,18 @@ root.title("Arduuno")
 
 def show_values():
     print (w1.get(), w2.get())
-
+# get value of scale 1
 def leerW1(valor):
     global lectura1
     global movex,movey,movexN,moveyN
     lectura1 = int(valor)*4
     
-
+# get the value of scale 2
 def leerW2(valor):
     global lectura2
     global movex,movey,movexN,moveyN
     lectura2 = int(valor)*4
-    
+# move the player
 def movimiento ():
     global lectura2, lectura1
     global movex,movey,movexN,moveyN
@@ -63,14 +64,14 @@ def movimiento ():
 
     rxN = rx
     ryN = ry
-
+# mover la comida
 def moverCubo():
     global rx,ry
     global eat 
     eat = False
     rx = random.randrange(350)
     ry = random.randrange(350)
-
+#Ver si el usuario comió
 def verEat():
     global eat
     global contEat
@@ -78,7 +79,7 @@ def verEat():
         eat = True
         contEat +=1
         placa.digital[contEat + 7].write(1)
-
+# El usuario gano
 def win(texto):
     if(contEat == 6):
         texto.config(text = str("YOU WIN"))
@@ -86,6 +87,7 @@ def win(texto):
         sleep(3)
         root.destroy()
 
+# Update in de database 
 def update():
     global contEat
     ref = db.reference("boton1")
@@ -111,7 +113,6 @@ w1.place(x = 0, y = 0)
 w2 = Scale(marco3,command = leerW2, from_=0, to=100, length=300,tickinterval=5)
 w2.pack()
 w2.place(x = 70, y =0)
-#Button(marco3, text='Show', command=show_values).place(x=150,y = 0)
 
 texto = Label(marco1, 
                 text="Puntos: ", 
@@ -120,19 +121,10 @@ texto = Label(marco1,
                 fg="yellow")
 texto.grid(padx=10, pady=10,column=0, row=0)
 
-# textoA1 = Label(marco1, 
-#                 text="datos A1", 
-#                 bg='white', 
-#                 font=("Arial Bold", 10), 
-#                 fg="blue")
-# textoA1.grid(padx=10, pady=10,column=1, row=0)
-
 cuadrado = draw.create_rectangle(rx, ry, rx + cubosizex, ry+cubosizey, fill="orange", outline = 'black')
 ovalOne = draw.create_rectangle(0,0,90,90, fill = "white")
 
-
 while(1):
-    #textoA1.config(text = str(round(lectura2/4,2)))
     if(contEat > contAnt):
         update()
         contAnt += 1
